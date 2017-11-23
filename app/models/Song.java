@@ -12,11 +12,11 @@ import java.util.Set;
  */
 public class Song {
 
-	private int id;
-	private String title;
-	private int priceInDollars;
-	private String artist;
-	private int durationInMinutes;
+	public int id;
+	public String title;
+	public int priceInDollars;
+	public String artist;
+	public int durationInMinutes;
 	
 	public Song(int id, String title, int priceInDollars, String artist, int durationInMinutes) {
 		this.id = id;
@@ -51,13 +51,13 @@ public class Song {
 		this.title = title;
 	}
 	/**
-	 * @return the price
+	 * @return priceInDollars the priceInDollars to set
 	 */
 	public int getPrice() {
 		return priceInDollars;
 	}
 	/**
-	 * @param price the price to set
+	 * @param priceInDollars the priceInDollars to set
 	 */
 	public void setPrice(int price) {
 		this.priceInDollars = price;
@@ -93,5 +93,26 @@ public class Song {
 		songList = new HashSet<>();
 		songList.add(new Song(1, "Imagine", 29, "John Lennon", 502));
 		songList.add(new Song(2, "Free Bird", 25, "Skrkdrd", 562));			
+	}
+	
+	public static Set<Song> getAllSongs() {
+		return songList;
+	}
+	
+	public static Song findById(int id) {
+		for (Song song: songList) {
+			if(id == song.getId()) {
+				return song;
+			}
+		}
+		return null;
+	}
+	
+	public static void add(Song songToAdd) {
+		songList.add(songToAdd);
+	}
+	
+	public static boolean delete(Song songToDelete) {
+		return songList.remove(songToDelete); 
 	}
 }

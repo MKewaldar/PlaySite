@@ -1,0 +1,17 @@
+@(songList: Set[Song])
+
+<html>
+	<head>
+		<title>Song Overview Page</title>
+	</head>
+	<body>
+		<h1>View all the songs on this page.</h1>
+		
+		@for(song <- songList) {
+			<a href="#">@song.title</a>
+			<p>Artist: @song.artist</p>
+			<p>Price in USD: @song.priceInDollars</p>
+			}
+	</body>
+
+</html>
