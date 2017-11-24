@@ -17,7 +17,12 @@ public class Song {
 	public int priceInDollars;
 	public String artist;
 	public int durationInMinutes;
-	
+
+
+	public Song() {
+
+	}
+
 	public Song(int id, String title, int priceInDollars, String artist, int durationInMinutes) {
 		this.id = id;
 		this.title = title;

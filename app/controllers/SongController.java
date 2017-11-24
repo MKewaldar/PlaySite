@@ -3,8 +3,12 @@ package controllers;
 import java.util.Set;
 
 import models.Song;
+import play.data.Form;
+import play.data.FormFactory;
 import play.mvc.*;
 import views.html.songs.*;
+
+import javax.inject.Inject;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -12,13 +16,20 @@ import views.html.songs.*;
  */
 public class SongController extends Controller {
 
+
+	@Inject
+    FormFactory formFactory;
+
+
+
 	public Result index() {
 		Set<Song> songList = Song.getAllSongs();
 		return ok(index.render(songList));
 	}
 	
 	public Result create() {
-		return TODO;
+        Form<Song> songForm = formFactory.form(Song.class);
+		return ok(create.render(songForm));
 	}
 	
 	public Result save() {

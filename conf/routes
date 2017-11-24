@@ -3,7 +3,7 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.HomeController.index
+#GET     /                           controllers.HomeController.index
 # An example controller showing how to use dependency injection
 GET     /count                      controllers.CountController.count
 # An example controller showing how to write asynchronous code
@@ -16,10 +16,10 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET		/about/:name/:lastName					controllers.HomeController.about(name: String, lastName: String)
 
 # My song manager
-GET 	/songs									controllers.SongController.index
-GET		/songs/create							controllers.SongController.create
+GET 	/									    controllers.SongController.index()
+GET		/songs/create							controllers.SongController.create()
 GET		/songs/:songId							controllers.SongController.show(songId: Integer)
 GET		/songs/edit/:songId						controllers.SongController.edit(songId: Integer)
-POST	/songs/edit								controllers.SongController.update
-POST	/songs/create							controllers.SongController.save
+POST	/songs/edit								controllers.SongController.update()
+POST	/songs/create							controllers.SongController.save()
 GET		/songs/delete/:songId					controllers.SongController.delete(songId: Integer)
