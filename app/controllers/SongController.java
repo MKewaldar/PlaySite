@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.Set;
 
+import exceptions.SongNotFoundException;
 import models.Song;
 import play.data.Form;
 import play.data.FormFactory;
@@ -40,7 +41,17 @@ public class SongController extends Controller {
 	}
 	
 	public Result edit(int songId) {
-		return TODO;
+		Song song = Song.findById(songId);
+		if(song == null) {
+            try {
+                throw new SongNotFoundException();
+            } catch (SongNotFoundException e) {
+                e.printStackTrace();
+            }
+            return notFound("[EDIT] This song doesn't exist!");
+        }
+		Form<Song> songForm = formFactory.form(Song.class).fill(song);
+	    return ok(edit.render(songForm));
 	}
 	
 	public Result delete(int songId) {
@@ -52,6 +63,21 @@ public class SongController extends Controller {
 	}
 	
 	public Result update() {
-		return TODO;
-	}
+		Song song = formFactory.form(Song.class).bindFromRequest().get();
+	    Song oldSong = Song.findById(song.id);
+	    if(oldSong == null) {
+            try {
+                throw new SongNotFoundException("Song not found!");
+            } catch (SongNotFoundException e) {
+                e.printStackTrace();
+            }
+            return notFound("[UPDATE] This song doesn't exist!");
+        }
+        oldSong.setTitle(song.getTitle());
+        oldSong.setArtist(song.getArtist());
+        oldSong.setPrice(song.getPrice());
+
+        return redirect(routes.SongController.index());
+
+    }
 }

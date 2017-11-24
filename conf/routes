@@ -18,8 +18,8 @@ GET		/about/:name/:lastName					controllers.HomeController.about(name: String, l
 # My song manager
 GET 	/songs									controllers.SongController.index()
 GET		/songs/create							controllers.SongController.create()
-GET		/songs/:songId							controllers.SongController.show(songId: Integer)
-GET		/songs/edit/:songId						controllers.SongController.edit(songId: Integer)
+GET		/songs/:id							    controllers.SongController.show(id: Integer)
+GET		/songs/edit/:id					        controllers.SongController.edit(id: Integer)
 POST	/songs/edit								controllers.SongController.update()
 POST	/songs/create							controllers.SongController.save()
-GET		/songs/delete/:songId					controllers.SongController.delete(songId: Integer)
+GET		/songs/delete/:id					    controllers.SongController.delete(id: Integer)

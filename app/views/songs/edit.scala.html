@@ -2,17 +2,17 @@
 @import helper._
 <html>
     <head>
-        <title>Song Create Page</title>
+        <title>Song Edit Page</title>
     </head>
     <body>
-        <h1>Create a song!</h1>
-        @helper.form(action = helper.CSRF(routes.SongController.save())) {
+        <h1>Edit a song!</h1>
+        @helper.form(action = helper.CSRF(routes.SongController.update())) {
             @helper.inputText(songForm("id"))
             @helper.inputText(songForm("title"))
             @helper.inputText(songForm("artist"))
             @helper.inputText(songForm("priceInDollars"))
 
-            <input type="submit" value="Create Song">
+            <input type="submit" value="Edit Song">
             }
     </body>
 </html>

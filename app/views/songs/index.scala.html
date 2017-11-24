@@ -8,9 +8,9 @@
 		<h1>View all the songs on this page.</h1>
 		
 		@for(song <- songList) {
-			<a href="#">@song.title</a>
-			<p>Artist: @song.artist</p>
-			<p>Price in USD: @song.priceInDollars</p>
+			<a href="#">@song.getTitle()</a>
+			<p>Artist: @song.getArtist()</p>
+			<p>Price in USD: @song.getPrice()</p>
 			}
 	</body>
 
