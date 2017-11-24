@@ -33,7 +33,10 @@ public class SongController extends Controller {
 	}
 	
 	public Result save() {
-		return TODO;
+		Form<Song> songForm = formFactory.form(Song.class).bindFromRequest();
+		Song song = songForm.get();
+		Song.add(song);
+		return redirect(routes.SongController.index());
 	}
 	
 	public Result edit(int songId) {

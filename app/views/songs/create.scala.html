@@ -5,7 +5,7 @@
         <title>Song Create Page</title>
     </head>
     <body>
-        <h1>Create a book!</h1>
+        <h1>Create a song!</h1>
         @helper.form(action = helper.CSRF(routes.SongController.save())) {
             @helper.inputText(songForm("songId"))
             @helper.inputText(songForm("title"))
