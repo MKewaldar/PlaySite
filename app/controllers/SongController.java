@@ -59,8 +59,17 @@ public class SongController extends Controller {
 	}
 	
 	public Result show(int songId) {
-		return TODO;
-	}
+        Song song = Song.findById(songId);
+        if (song == null) {
+            try {
+                throw new SongNotFoundException();
+            } catch (SongNotFoundException e) {
+                e.printStackTrace();
+            }
+            return notFound("[SHOW] This song doesn't exist!");
+        }
+        return ok(show.render(song));
+    }
 	
 	public Result update() {
 		Song song = formFactory.form(Song.class).bindFromRequest().get();
