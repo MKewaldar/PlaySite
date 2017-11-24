@@ -17,6 +17,7 @@ public class Song {
 	public int priceInDollars;
 	public String artist;
 	public int durationInMinutes;
+	public static Set<Song> songList;
 
 
 	public Song() {
@@ -29,6 +30,12 @@ public class Song {
 		this.priceInDollars = priceInDollars;
 		this.artist = artist;
 		this.durationInMinutes = durationInMinutes;
+	}
+
+	static {
+		songList = new HashSet<>();
+		songList.add(new Song(1, "Imagine", 29, "John Lennon", 502));
+		songList.add(new Song(2, "Free Bird", 25, "Skrkdrd", 562));
 	}
 
 	/**
@@ -90,14 +97,6 @@ public class Song {
 	 */
 	public void setDurationInMinutes(int durationInMinutes) {
 		this.durationInMinutes = durationInMinutes;
-	}
-	
-	private static Set<Song> songList;
-	
-	static {
-		songList = new HashSet<>();
-		songList.add(new Song(1, "Imagine", 29, "John Lennon", 502));
-		songList.add(new Song(2, "Free Bird", 25, "Skrkdrd", 562));			
 	}
 	
 	public static Set<Song> getAllSongs() {

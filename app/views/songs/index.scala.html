@@ -1,17 +1,20 @@
+
 @import java.util
 @(songList: util.Set[Song])
-
 <html>
 	<head>
 		<title>Song Overview Page</title>
 	</head>
 	<body>
 		<h1>View all the songs on this page.</h1>
-		@for(song <- songList) {
-			<a href="@routes.SongController.show(song.getId())">@song.getTitle()</a>
-			<p>Artist: @song.getArtist()</p>
-			<p>Price in USD: @song.getPrice()</p>
-			<p>Duration in minutes: @song.getDurationInMinutes()</p>
+		@for(songToManipulate <- songList){
+            <a href="@routes.SongController.show(songToManipulate.getId())">@songToManipulate.getTitle</a>
+			<p>Artist : @songToManipulate.getArtist</p>
+			<p>Price in USD: @songToManipulate.getPrice</p>
+			<p>Duration in minutes: @songToManipulate.getDurationInMinutes</p>
 			}
+        <br>
+        <br>
+        <a href="@routes.SongController.create()">Create a song</a>
 	</body>
 </html>

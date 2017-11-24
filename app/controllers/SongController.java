@@ -55,7 +55,17 @@ public class SongController extends Controller {
 	}
 	
 	public Result delete(int songId) {
-		return TODO;
+	    Song song = Song.findById(songId);
+	    if(song == null) {
+            try {
+                throw new SongNotFoundException();
+            } catch (SongNotFoundException e) {
+                e.printStackTrace();
+            }
+            return notFound("[Delete] This song doesn't exist!");
+        }
+        Song.delete(song);
+		return redirect(routes.SongController.index());
 	}
 	
 	public Result show(int songId) {
