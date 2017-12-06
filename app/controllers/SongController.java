@@ -22,24 +22,40 @@ public class SongController extends Controller {
     FormFactory formFactory;
 
 
-
+    /**
+     * Directs user to the index page
+     * @return Index Page View
+     */
 	public Result index() {
 		Set<Song> songList = Song.getAllSongs();
 		return ok(index.render(songList));
 	}
-	
+
+    /**
+     * Directs user to the creation page
+     * @return Create Page View
+     */
 	public Result create() {
         Form<Song> songForm = formFactory.form(Song.class);
 		return ok(create.render(songForm));
 	}
-	
+
+    /**
+     * Saves a song from the form on the Create page, then redirects to the index page.
+     * @return Index Page View
+     */
 	public Result save() {
 		Form<Song> songForm = formFactory.form(Song.class).bindFromRequest();
 		Song song = songForm.get();
 		Song.add(song);
 		return redirect(routes.SongController.index());
 	}
-	
+
+    /**
+     *
+     * @param songId ID of the song to edit
+     * @return Edit Page View
+     */
 	public Result edit(int songId) {
 		Song song = Song.findById(songId);
 		if(song == null) {
@@ -53,7 +69,12 @@ public class SongController extends Controller {
 		Form<Song> songForm = formFactory.form(Song.class).fill(song);
 	    return ok(edit.render(songForm));
 	}
-	
+
+    /**
+     *
+     * @param songId ID of the song to delete
+     * @return Index Page View
+     */
 	public Result delete(int songId) {
 	    Song song = Song.findById(songId);
 	    if(song == null) {
