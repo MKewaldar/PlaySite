@@ -1,0 +1,17 @@
+@(song: Song)
+
+<html>
+    <head>
+        <title>@song.getTitle</title>
+    </head>
+    <body>
+        <h2>@song.getTitle</h2>
+        <p>Artist : @song.getArtist</p>
+        <p>Price : $@song.getPrice</p>
+        <p>Duration in minutes: @song.getDurationInMinutes</p>
+
+        <a href="@routes.SongController.edit(song.getId)">Edit</a>
+        <a href="@routes.SongController.delete(song.getId)">Delete</a>
+
+    </body>
+</html>

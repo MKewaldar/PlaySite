@@ -1,0 +1,20 @@
+@(songForm: Form[Song])
+@import helper._
+<html>
+    <head>
+        <title>Song Create Page</title>
+    </head>
+    <body>
+        <h1>Create a song!</h1>
+        @helper.form(action = helper.CSRF(routes.SongController.save())) {
+            @helper.inputText(songForm("id"))
+            @helper.inputText(songForm("title"))
+            @helper.inputText(songForm("artist"))
+            @helper.inputText(songForm("priceInDollars"))
+            @helper.inputText(songForm("durationInMinutes"))
+
+
+            <input type="submit" value="Create Song">
+            }
+    </body>
+</html>
