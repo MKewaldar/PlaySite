@@ -1,6 +1,6 @@
 package controllers;
 
-import java.util.Set;
+import java.util.List;
 
 import exceptions.SongNotFoundException;
 import models.Song;
@@ -27,7 +27,7 @@ public class SongController extends Controller {
      * @return Index Page View
      */
 	public Result index() {
-		Set<Song> songList = Song.getAllSongs();
+		List<Song> songList = Song.find.all();
 		return ok(index.render(songList));
 	}
 
@@ -47,7 +47,7 @@ public class SongController extends Controller {
 	public Result save() {
 		Form<Song> songForm = formFactory.form(Song.class).bindFromRequest();
 		Song song = songForm.get();
-		Song.add(song);
+		song.save();
 		return redirect(routes.SongController.index());
 	}
 
@@ -56,8 +56,8 @@ public class SongController extends Controller {
      * @param songId ID of the song to edit
      * @return Edit Page View
      */
-	public Result edit(int songId) {
-		Song song = Song.findById(songId);
+	public Result edit(Integer songId) {
+		Song song = Song.find.byId(songId);
 		if(song == null) {
             try {
                 throw new SongNotFoundException();
@@ -75,8 +75,8 @@ public class SongController extends Controller {
      * @param songId ID of the song to delete
      * @return Index Page View
      */
-	public Result delete(int songId) {
-	    Song song = Song.findById(songId);
+	public Result delete(Integer songId) {
+	    Song song = Song.find.byId(songId);
 	    if(song == null) {
             try {
                 throw new SongNotFoundException();
@@ -85,12 +85,12 @@ public class SongController extends Controller {
             }
             return notFound("[Delete] This song doesn't exist!");
         }
-        Song.delete(song);
+        song.delete();
 		return redirect(routes.SongController.index());
 	}
 	
-	public Result show(int songId) {
-        Song song = Song.findById(songId);
+	public Result show(Integer songId) {
+        Song song = Song.find.byId(songId);
         if (song == null) {
             try {
                 throw new SongNotFoundException();
@@ -104,7 +104,7 @@ public class SongController extends Controller {
 	
 	public Result update() {
 		Song song = formFactory.form(Song.class).bindFromRequest().get();
-	    Song oldSong = Song.findById(song.id);
+	    Song oldSong = Song.find.byId(song.getId());
 	    if(oldSong == null) {
             try {
                 throw new SongNotFoundException("Song not found!");
@@ -115,7 +115,9 @@ public class SongController extends Controller {
         }
         oldSong.setTitle(song.getTitle());
         oldSong.setArtist(song.getArtist());
-        oldSong.setPrice(song.getPrice());
+        oldSong.setPriceInDollars(song.getPriceInDollars());
+        oldSong.update();
+        oldSong.setId(oldSong.getId());
 
         return redirect(routes.SongController.index());
 
