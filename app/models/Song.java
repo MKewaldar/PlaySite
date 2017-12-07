@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  * @author Marlon Kewaldar
- * Class representing a physical copy of a song.
+ * Class representing a copy of a song.
  */
 public class Song {
 
