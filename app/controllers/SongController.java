@@ -50,8 +50,13 @@ public class SongController extends Controller {
      */
 	public Result save() {
 		Form<Song> songForm = formFactory.form(Song.class).bindFromRequest();
+		if(songForm.hasErrors()) {
+		    flash("danger", "Please make sure you filled out the fields correctly.");
+		    return badRequest(create.render(songForm));
+        }
 		Song song = songForm.get();
 		song.save();
+        flash("success", "Your song has been successfully saved!");
 		return redirect(routes.SongController.index());
 	}
 
@@ -119,7 +124,14 @@ public class SongController extends Controller {
      * @return Index Page View
      */
 	public Result update() {
-		Song song = formFactory.form(Song.class).bindFromRequest().get();
+		Form<Song> songForm = formFactory.form(Song.class).bindFromRequest();
+
+        if(songForm.hasErrors()) {
+            flash("danger", "Please make sure you filled out the fields correctly.");
+            return badRequest(create.render(songForm));
+        }
+
+	    Song song = songForm.get();
 	    Song oldSong = Song.find.byId(song.getId());
 	    if(oldSong == null) {
             try {
@@ -133,8 +145,11 @@ public class SongController extends Controller {
         oldSong.setTitle(song.getTitle());
         oldSong.setArtist(song.getArtist());
         oldSong.setPriceInDollars(song.getPriceInDollars());
+        oldSong.setDurationInMinutes(song.getDurationInMinutes());
         oldSong.update();
         oldSong.setId(oldSong.getId());
+
+        flash("success", "Your song has been successfully edited!");
 
         return redirect(routes.SongController.index());
     }
