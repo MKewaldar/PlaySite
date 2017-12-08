@@ -3,3 +3,7 @@ scala:
    - 2.12.2
 script:
    - sbt test
+services:
+  - mysql
+before_install:
+  - mysql -e 'CREATE DATABASE songManagerdb;'

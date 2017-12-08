@@ -1,6 +1,6 @@
 package controllers;
 
-import java.util.Set;
+import java.util.List;
 
 import exceptions.SongNotFoundException;
 import models.Song;
@@ -12,12 +12,16 @@ import views.html.songs.*;
 import javax.inject.Inject;
 
 /**
+ * @author Marlon Kewaldar
  * This controller contains an action to handle HTTP requests
- * to the song overview pages.
+ * to the song overview pages
  */
 public class SongController extends Controller {
 
 
+    /**
+     * Inject a formFactory from the Play library
+     */
 	@Inject
     FormFactory formFactory;
 
@@ -27,7 +31,7 @@ public class SongController extends Controller {
      * @return Index Page View
      */
 	public Result index() {
-		Set<Song> songList = Song.getAllSongs();
+		List<Song> songList = Song.find.all();
 		return ok(index.render(songList));
 	}
 
@@ -47,17 +51,20 @@ public class SongController extends Controller {
 	public Result save() {
 		Form<Song> songForm = formFactory.form(Song.class).bindFromRequest();
 		Song song = songForm.get();
-		Song.add(song);
+		song.save();
 		return redirect(routes.SongController.index());
 	}
 
     /**
-     *
+     * TODO: Do this better
+     * Edit a song, by essentially making a new one filled with the data from the old and saving it with some
+     * edited fields
      * @param songId ID of the song to edit
      * @return Edit Page View
      */
-	public Result edit(int songId) {
-		Song song = Song.findById(songId);
+
+	public Result edit(Integer songId) {
+		Song song = Song.find.byId(songId);
 		if(song == null) {
             try {
                 throw new SongNotFoundException();
@@ -71,12 +78,12 @@ public class SongController extends Controller {
 	}
 
     /**
-     *
+     * Delete a song based on the ID given
      * @param songId ID of the song to delete
      * @return Index Page View
      */
-	public Result delete(int songId) {
-	    Song song = Song.findById(songId);
+	public Result delete(Integer songId) {
+	    Song song = Song.find.byId(songId);
 	    if(song == null) {
             try {
                 throw new SongNotFoundException();
@@ -85,12 +92,17 @@ public class SongController extends Controller {
             }
             return notFound("[Delete] This song doesn't exist!");
         }
-        Song.delete(song);
+        song.delete();
 		return redirect(routes.SongController.index());
 	}
-	
-	public Result show(int songId) {
-        Song song = Song.findById(songId);
+
+    /**
+     * Show all the information (save the ID) in an overview page
+     * @param songId ID of the song to show
+     * @return Song Index View
+     */
+	public Result show(Integer songId) {
+        Song song = Song.find.byId(songId);
         if (song == null) {
             try {
                 throw new SongNotFoundException();
@@ -101,10 +113,14 @@ public class SongController extends Controller {
         }
         return ok(show.render(song));
     }
-	
+
+    /**
+     * Works in conjunction with the edit method, overwriting the old song with the new song created there
+     * @return Index Page View
+     */
 	public Result update() {
 		Song song = formFactory.form(Song.class).bindFromRequest().get();
-	    Song oldSong = Song.findById(song.id);
+	    Song oldSong = Song.find.byId(song.getId());
 	    if(oldSong == null) {
             try {
                 throw new SongNotFoundException("Song not found!");
@@ -113,11 +129,13 @@ public class SongController extends Controller {
             }
             return notFound("[UPDATE] This song doesn't exist!");
         }
+        //Don't change ID, because it's autoincremented in db
         oldSong.setTitle(song.getTitle());
         oldSong.setArtist(song.getArtist());
-        oldSong.setPrice(song.getPrice());
+        oldSong.setPriceInDollars(song.getPriceInDollars());
+        oldSong.update();
+        oldSong.setId(oldSong.getId());
 
         return redirect(routes.SongController.index());
-
     }
 }
