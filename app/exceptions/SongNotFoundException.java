@@ -1,5 +1,9 @@
 package exceptions;
 
+/**
+ * @author Marlon Kewaldar
+ * Class representing an exception that will be thrown if a song isn't found based on its IDs
+ */
 public class SongNotFoundException extends Exception {
     public SongNotFoundException() {
     }

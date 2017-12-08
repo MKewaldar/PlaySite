@@ -17,6 +17,7 @@ import javax.persistence.Id;
 
 public class Song extends Model {
 
+    //The @Id indicated that eBean treats the id field as the primary key
     @Id
 	private Integer id;
     private String title;

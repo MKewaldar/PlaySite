@@ -12,12 +12,16 @@ import views.html.songs.*;
 import javax.inject.Inject;
 
 /**
+ * @author Marlon Kewaldar
  * This controller contains an action to handle HTTP requests
- * to the song overview pages.
+ * to the song overview pages
  */
 public class SongController extends Controller {
 
 
+    /**
+     * Inject a formFactory from the Play library
+     */
 	@Inject
     FormFactory formFactory;
 
@@ -52,10 +56,13 @@ public class SongController extends Controller {
 	}
 
     /**
-     *
+     * TODO: Do this better
+     * Edit a song, by essentially making a new one filled with the data from the old and saving it with some
+     * edited fields
      * @param songId ID of the song to edit
      * @return Edit Page View
      */
+
 	public Result edit(Integer songId) {
 		Song song = Song.find.byId(songId);
 		if(song == null) {
@@ -71,7 +78,7 @@ public class SongController extends Controller {
 	}
 
     /**
-     *
+     * Delete a song based on the ID given
      * @param songId ID of the song to delete
      * @return Index Page View
      */
@@ -88,7 +95,12 @@ public class SongController extends Controller {
         song.delete();
 		return redirect(routes.SongController.index());
 	}
-	
+
+    /**
+     * Show all the information (save the ID) in an overview page
+     * @param songId ID of the song to show
+     * @return Song Index View
+     */
 	public Result show(Integer songId) {
         Song song = Song.find.byId(songId);
         if (song == null) {
@@ -101,7 +113,11 @@ public class SongController extends Controller {
         }
         return ok(show.render(song));
     }
-	
+
+    /**
+     * Works in conjunction with the edit method, overwriting the old song with the new song created there
+     * @return Index Page View
+     */
 	public Result update() {
 		Song song = formFactory.form(Song.class).bindFromRequest().get();
 	    Song oldSong = Song.find.byId(song.getId());
@@ -113,6 +129,7 @@ public class SongController extends Controller {
             }
             return notFound("[UPDATE] This song doesn't exist!");
         }
+        //Don't change ID, because it's autoincremented in db
         oldSong.setTitle(song.getTitle());
         oldSong.setArtist(song.getArtist());
         oldSong.setPriceInDollars(song.getPriceInDollars());
@@ -120,6 +137,5 @@ public class SongController extends Controller {
         oldSong.setId(oldSong.getId());
 
         return redirect(routes.SongController.index());
-
     }
 }
