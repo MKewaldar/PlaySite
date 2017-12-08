@@ -1,0 +1,6 @@
+@(songForm: Form[Song])
+
+@helper.inputText(songForm("title"), 'class -> "form-control")
+@helper.inputText(songForm("artist"), 'class -> "form-control")
+@helper.inputText(songForm("priceInDollars"), 'class -> "form-control")
+@helper.inputText(songForm("durationInMinutes"), 'class -> "form-control")

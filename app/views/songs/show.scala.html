@@ -6,6 +6,6 @@
         <p>Price : $@song.getPriceInDollars</p>
         <p>Duration in minutes: @song.getDurationInMinutes</p>
 
-        <a href="@routes.SongController.edit(song.getId)">Edit</a>
-        <a href="@routes.SongController.delete(song.getId)">Delete</a>
+        <a class="btn btn-primary" href="@routes.SongController.edit(song.getId)">Edit</a>
+        <a class="btn btn-danger" href="@routes.SongController.delete(song.getId)">Delete</a>
     }

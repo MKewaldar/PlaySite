@@ -1,17 +1,16 @@
 @(songForm: Form[Song])
-    @import helper._
+@import helper._
+@import views.html.partials._songsFormFields
 
     @layout("Edit Song") {
         <h1>Edit a song!</h1>
-        @helper.form(action = helper.CSRF(routes.SongController.update())) {
-            @helper.inputText(songForm("title"))
-            @helper.inputText(songForm("artist"))
-            @helper.inputText(songForm("priceInDollars"))
-            @helper.inputText(songForm("durationInMinutes"))
+    @helper.form(action = helper.CSRF(routes.SongController.update())) {
+
+        @_songsFormFields(songForm)
 
             <!-- Find better solution for this -->
             <input type="hidden" name="id" value="@songForm.get().getId">
 
-            <input type="submit" value="Edit Song">
+        <button class="btn btn-primary" type="submit">Edit Song</button>
         }
     }

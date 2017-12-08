@@ -2,14 +2,18 @@
 @(songList: util.List[Song])
 
 @layout("Songlist") {
-    <h1>View all the songs on this page.</h1>
+    <h1><b>View all the songs on this page.</b></h1>
+    <br>
     @for(songToManipulate <- songList){
-        <a href="@routes.SongController.show(songToManipulate.getId())">@songToManipulate.getTitle</a>
+        <a class="btn btn-link" href="@routes.SongController.show(songToManipulate.getId())">@songToManipulate.getTitle()</a>
         <p>Artist : @songToManipulate.getArtist</p>
         <p>Price: $@songToManipulate.getPriceInDollars</p>
         <p>Duration in minutes: @songToManipulate.getDurationInMinutes</p>
+        <br>
     }
     <br>
-    <br>
-    <a href="@routes.SongController.create()">Create a song</a>
+    <a class="btn btn-success" href="@routes.SongController.create()">
+        <i class="glyphicon glyphicon-plus-sign"></i>
+        Create Song
+    </a>
 }
