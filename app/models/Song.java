@@ -43,6 +43,9 @@ public class Song extends Model implements Entity {
 
     public static Finder<Integer, Song> find = new Finder<>(Song.class);
 
+    public Song () {
+
+    }
 
     public Integer getId() {
         return id;

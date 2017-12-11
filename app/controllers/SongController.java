@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import exceptions.SongNotFoundException;
@@ -31,7 +33,8 @@ public class SongController extends Controller {
      * @return Index Page View
      */
 	public Result index() {
-		List<Song> songList = Song.find.all();
+	    //This used to be a List. I changed this to a HashSet so the performance of the retrieval is improved.
+		HashSet<Song> songList = new HashSet<>(Song.find.all());
 		return ok(index.render(songList));
 	}
 
