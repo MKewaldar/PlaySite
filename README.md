@@ -1,12 +1,12 @@
-#SongManager
-##By Marlon Kewaldar
+# SongManager
+## By Marlon Kewaldar
 
-###Execution
+### Execution
 Type the following at the prompt and it will run the starter project:
 
 ./sbt run
 
-###Content
+### Content
 The following pages are present:
 
 - /
@@ -20,7 +20,7 @@ For database functionality to work, please configure a MySQL/MariaDB database as
 - Username: root
 - Password: (Blank)
 
-###ToDo
+### ToDo
 - Real-time form validation
 - Authentication
 - Formatting
@@ -28,4 +28,3 @@ For database functionality to work, please configure a MySQL/MariaDB database as
 - Playlist system
 - Security
 - Proper database configuation
-- 
