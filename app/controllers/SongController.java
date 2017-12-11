@@ -1,14 +1,13 @@
 package controllers;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 import exceptions.SongNotFoundException;
 import models.Song;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.*;
+import views.html.errors._404;
 import views.html.songs.*;
 
 import javax.inject.Inject;
@@ -73,15 +72,8 @@ public class SongController extends Controller {
 
 	public Result edit(Integer songId) {
 		Song song = Song.find.byId(songId);
-		if(song == null) {
-            try {
-                throw new SongNotFoundException();
-            } catch (SongNotFoundException e) {
-                e.printStackTrace();
-            }
-            return notFound("[EDIT] This song doesn't exist!");
-        }
-		Form<Song> songForm = formFactory.form(Song.class).fill(song);
+        if (handleError(song)) return notFound(_404.render());
+        Form<Song> songForm = formFactory.form(Song.class).fill(song);
 	    return ok(edit.render(songForm));
 	}
 
@@ -113,15 +105,20 @@ public class SongController extends Controller {
      */
 	public Result show(Integer songId) {
         Song song = Song.find.byId(songId);
+        if (handleError(song)) return notFound(_404.render());
+        return ok(show.render(song));
+    }
+
+    private boolean handleError(Song song) {
         if (song == null) {
             try {
                 throw new SongNotFoundException();
             } catch (SongNotFoundException e) {
                 e.printStackTrace();
             }
-            return notFound("[SHOW] This song doesn't exist!");
+            return true;
         }
-        return ok(show.render(song));
+        return false;
     }
 
     /**
@@ -144,6 +141,7 @@ public class SongController extends Controller {
             } catch (SongNotFoundException e) {
                 e.printStackTrace();
             }
+            flash("danger", "This song doesn't exist!");
             return notFound("[UPDATE] This song doesn't exist!");
         }
         //Don't change ID, because it's autoincremented in db
@@ -156,6 +154,6 @@ public class SongController extends Controller {
 
         flash("success", "Your song has been successfully edited!");
 
-        return redirect(routes.SongController.index());
+        return ok();
     }
 }

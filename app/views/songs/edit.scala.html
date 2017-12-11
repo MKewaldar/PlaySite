@@ -4,13 +4,18 @@
 
     @layout("Edit Song") {
         <h1>Edit a song!</h1>
-    @helper.form(action = helper.CSRF(routes.SongController.update())) {
+    <!-- Give the form we create below an ID, so we can send it with the onclick function later -->
+    @helper.form(action = helper.CSRF(routes.SongController.update()), 'id->"updateForm") {
 
         @_songsFormFields(songForm)
 
             <!-- Find better solution for this -->
             <input type="hidden" name="id" value="@songForm.get().getId">
 
-        <button class="btn btn-primary" type="submit">Edit Song</button>
         }
-    }
+    <!-- Pass the sendPutRequest method the parameters noted below -->
+        <button class="btn btn-primary" onclick="sendPutRequest('updateForm',
+                '@helper.CSRF(routes.SongController.edit(songForm.get().getId()))')
+        ">Edit Song</button>
+
+}
