@@ -98,10 +98,12 @@ public class SongController extends Controller {
             } catch (SongNotFoundException e) {
                 e.printStackTrace();
             }
+            flash("danger", "This song doesn't exist!");
             return notFound("[Delete] This song doesn't exist!");
         }
         song.delete();
-		return redirect(routes.SongController.index());
+	    flash("success", "The song was successfully deleted!");
+		return ok();
 	}
 
     /**

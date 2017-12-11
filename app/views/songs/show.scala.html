@@ -7,5 +7,10 @@
         <p>Duration in minutes: @song.getDurationInMinutes</p>
 
         <a class="btn btn-primary" href="@routes.SongController.edit(song.getId)">Edit</a>
-        <a class="btn btn-danger" href="@routes.SongController.delete(song.getId)">Delete</a>
+
+        <!-- The button below sends a onClick request that deletes a song entry using the HTTP 'DELETE' request
+             The 'helper' class facilitates redirects with a CSRF token -->
+        <button class="btn btn-danger" onclick="sendDeleteRequest('@helper.CSRF(routes.SongController.delete(song.getId()))',
+        '@helper.CSRF(routes.HomeController.index())'
+        )"> Delete</button>
     }

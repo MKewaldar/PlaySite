@@ -1,3 +1,12 @@
-if (window.console) {
-  console.log("Welcome to your Play application's JavaScript!");
+function sendDeleteRequest(url, redirectUrl) {
+  $.ajax({
+      url: url,
+      method: "DELETE",
+      success: function() {
+        window.location = redirectUrl;
+      },
+      error: function() {
+        window.location.reload();
+      }
+  });
 }
