@@ -11,6 +11,6 @@
         <!-- The button below sends a onClick request that deletes a song entry using the HTTP 'DELETE' request
              The 'helper' class facilitates redirects with a CSRF token -->
         <button class="btn btn-danger" onclick="sendDeleteRequest('@helper.CSRF(routes.SongController.delete(song.getId()))',
-        '@helper.CSRF(routes.HomeController.index())'
+        '@helper.CSRF(routes.SongController.index())'
         )"> Delete</button>
     }

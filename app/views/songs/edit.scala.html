@@ -15,7 +15,7 @@
         }
     <!-- Pass the sendPutRequest method the parameters noted below -->
         <button class="btn btn-primary" onclick="sendPutRequest('updateForm',
-                '@helper.CSRF(routes.SongController.edit(songForm.get().getId()))')
+                '@helper.CSRF(routes.SongController.index())')
         ">Edit Song</button>
 
 }
