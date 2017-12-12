@@ -46,7 +46,6 @@ public class Song extends Model implements Entity {
     public Song () {
 
     }
-
     public Integer getId() {
         return id;
     }
@@ -78,7 +77,6 @@ public class Song extends Model implements Entity {
     public void setArtist(String artist) {
         this.artist = artist;
     }
-
 
     public Integer getDurationInMinutes() {
         return durationInMinutes;
