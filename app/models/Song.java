@@ -4,8 +4,8 @@
 package models;
 
 import io.ebean.*;
+import play.data.validation.Constraints;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
@@ -13,20 +13,39 @@ import javax.persistence.Id;
  * Class representing a copy of a song.
  */
 
-@Entity
+@javax.persistence.Entity
 
-public class Song extends Model {
+public class Song extends Model implements Entity {
 
     //The @Id indicated that eBean treats the id field as the primary key
     @Id
 	private Integer id;
+
+    @Constraints.Required
+    @Constraints.MinLength(5)
+    @Constraints.MaxLength(30)
     private String title;
+
+    @Constraints.Required
+    @Constraints.Min(5)
+    @Constraints.Max(100)
     private int priceInDollars;
+
+    @Constraints.Required
+    @Constraints.MinLength(5)
+    @Constraints.MaxLength(60)
     private String artist;
+
+    @Constraints.Min(1)
+    @Constraints.Max(20)
+    @Constraints.Required
     private Integer durationInMinutes;
 
     public static Finder<Integer, Song> find = new Finder<>(Song.class);
 
+    public Song () {
+
+    }
 
     public Integer getId() {
         return id;
@@ -67,5 +86,10 @@ public class Song extends Model {
 
     public void setDurationInMinutes(Integer durationInMinutes) {
         this.durationInMinutes = durationInMinutes;
+    }
+
+    @Override
+    public Entity returnSelf() {
+        return this;
     }
 }

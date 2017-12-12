@@ -1,12 +1,13 @@
 package controllers;
 
-import java.util.List;
+import java.util.HashSet;
 
 import exceptions.SongNotFoundException;
 import models.Song;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.*;
+import views.html.errors._404;
 import views.html.songs.*;
 
 import javax.inject.Inject;
@@ -31,7 +32,8 @@ public class SongController extends Controller {
      * @return Index Page View
      */
 	public Result index() {
-		List<Song> songList = Song.find.all();
+	    //This used to be a List. I changed this to a HashSet so the performance of the retrieval is improved.
+		HashSet<Song> songList = new HashSet<>(Song.find.all());
 		return ok(index.render(songList));
 	}
 
@@ -50,8 +52,13 @@ public class SongController extends Controller {
      */
 	public Result save() {
 		Form<Song> songForm = formFactory.form(Song.class).bindFromRequest();
+		if(songForm.hasErrors()) {
+		    flash("danger", "Please make sure you filled out the fields correctly.");
+		    return badRequest(create.render(songForm));
+        }
 		Song song = songForm.get();
 		song.save();
+        flash("success", "Your song has been successfully saved!");
 		return redirect(routes.SongController.index());
 	}
 
@@ -65,15 +72,8 @@ public class SongController extends Controller {
 
 	public Result edit(Integer songId) {
 		Song song = Song.find.byId(songId);
-		if(song == null) {
-            try {
-                throw new SongNotFoundException();
-            } catch (SongNotFoundException e) {
-                e.printStackTrace();
-            }
-            return notFound("[EDIT] This song doesn't exist!");
-        }
-		Form<Song> songForm = formFactory.form(Song.class).fill(song);
+        if (handleError(song)) return notFound(_404.render());
+        Form<Song> songForm = formFactory.form(Song.class).fill(song);
 	    return ok(edit.render(songForm));
 	}
 
@@ -90,10 +90,12 @@ public class SongController extends Controller {
             } catch (SongNotFoundException e) {
                 e.printStackTrace();
             }
+            flash("danger", "This song doesn't exist!");
             return notFound("[Delete] This song doesn't exist!");
         }
         song.delete();
-		return redirect(routes.SongController.index());
+	    flash("success", "The song was successfully deleted!");
+		return ok();
 	}
 
     /**
@@ -103,15 +105,20 @@ public class SongController extends Controller {
      */
 	public Result show(Integer songId) {
         Song song = Song.find.byId(songId);
+        if (handleError(song)) return notFound(_404.render());
+        return ok(show.render(song));
+    }
+
+    private boolean handleError(Song song) {
         if (song == null) {
             try {
                 throw new SongNotFoundException();
             } catch (SongNotFoundException e) {
                 e.printStackTrace();
             }
-            return notFound("[SHOW] This song doesn't exist!");
+            return true;
         }
-        return ok(show.render(song));
+        return false;
     }
 
     /**
@@ -119,7 +126,14 @@ public class SongController extends Controller {
      * @return Index Page View
      */
 	public Result update() {
-		Song song = formFactory.form(Song.class).bindFromRequest().get();
+		Form<Song> songForm = formFactory.form(Song.class).bindFromRequest();
+
+        if(songForm.hasErrors()) {
+            flash("danger", "Please make sure you filled out the fields correctly.");
+            return badRequest(create.render(songForm));
+        }
+
+	    Song song = songForm.get();
 	    Song oldSong = Song.find.byId(song.getId());
 	    if(oldSong == null) {
             try {
@@ -127,15 +141,19 @@ public class SongController extends Controller {
             } catch (SongNotFoundException e) {
                 e.printStackTrace();
             }
+            flash("danger", "This song doesn't exist!");
             return notFound("[UPDATE] This song doesn't exist!");
         }
         //Don't change ID, because it's autoincremented in db
         oldSong.setTitle(song.getTitle());
         oldSong.setArtist(song.getArtist());
         oldSong.setPriceInDollars(song.getPriceInDollars());
+        oldSong.setDurationInMinutes(song.getDurationInMinutes());
         oldSong.update();
         oldSong.setId(oldSong.getId());
 
-        return redirect(routes.SongController.index());
+        flash("success", "Your song has been successfully edited!");
+
+        return ok();
     }
 }

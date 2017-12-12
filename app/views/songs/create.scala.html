@@ -1,15 +1,12 @@
 @(songForm: Form[Song])
 @import helper._
+@import views.html.partials._songsFormFields
 
-@layout("Create Song") {
+@layout("Create Song"){
     <h1>Create a song!</h1>
     @helper.form(action = helper.CSRF(routes.SongController.save())) {
-        @helper.inputText(songForm("title"))
-        @helper.inputText(songForm("artist"))
-        @helper.inputText(songForm("priceInDollars"))
-        @helper.inputText(songForm("durationInMinutes"))
+        @_songsFormFields(songForm)
 
-
-        <input type="submit" value="Create Song">
+    <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-plus-sign"></i> Create Song</button>
     }
 }
