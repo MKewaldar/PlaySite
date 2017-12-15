@@ -6,6 +6,7 @@ package exceptions;
  */
 public class SongNotFoundException extends Exception {
     public SongNotFoundException() {
+        super("The current song wasn't found. Please reload the page.");
     }
 
     public SongNotFoundException(String message) {
