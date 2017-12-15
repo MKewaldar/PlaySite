@@ -30,7 +30,7 @@ public class GenericBoxOfItems<T> {
 
     /**
      * Test function to show the concept works.
-     * @param args
+     * @param args arguments for main method
      */
     public static void main(String[] args) {
         GenericBoxOfItems<Song> boxWithSongs = new GenericBoxOfItems<Song>();

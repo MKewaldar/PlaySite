@@ -1,7 +1,5 @@
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import play.Application;
 import play.Application;
 import play.test.Helpers;
 import play.test.TestBrowser;

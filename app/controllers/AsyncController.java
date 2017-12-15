@@ -47,6 +47,7 @@ public class AsyncController extends Controller {
      * The configuration in the <code>routes</code> file means that this method
      * will be called when the application receives a <code>GET</code> request with
      * a path of <code>/message</code>.
+     * @return CompletionStage Completion object
      */
     public CompletionStage<Result> message() {
         return getFutureMessage(1, TimeUnit.SECONDS).thenApplyAsync(Results::ok, exec);

@@ -93,8 +93,8 @@ public class SongController extends Controller {
         //The if is generally not supposed to be triggered, but I added it just in case the HTTP request goes wrong
         if (song == null) {
             try {
-                throw new SongNotFoundException();
-            } catch (SongNotFoundException e) {
+                song.delete();
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
             flash("danger", "This song doesn't exist!");
