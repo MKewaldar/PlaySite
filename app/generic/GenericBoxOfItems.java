@@ -4,6 +4,7 @@ import models.Song;
 
 
 /**
+ * @author Marlon Kewaldar
  * This is a generic class. No relevance to the project; purely to show off for SRE2A. Will be removed
  * after final code review.
  * @param <T> Generic type that the box can hold.
@@ -49,5 +50,4 @@ public class GenericBoxOfItems<T> {
         System.out.println(boxWithSongs.getItemAdded().toString());
         System.out.println(boxWithWords.getItemAdded().toString());
     }
-
 }

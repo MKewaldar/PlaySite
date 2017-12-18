@@ -10,6 +10,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static play.test.Helpers.*;
 
+/**
+ * @author Marlon Kewaldar
+ * Test responsible for ensuring any browser can access the page
+ */
 public class BrowserTest extends WithBrowser {
 
 

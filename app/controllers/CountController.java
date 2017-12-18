@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
+ * @author Marlon Kewaldar
  * This controller demonstrates how to use dependency injection to
  * bind a component into a controller class. The class contains an
  * action that shows an incrementing count to users. The {@link Counter}

@@ -12,9 +12,8 @@ import static org.awaitility.Awaitility.await;
 import static play.test.Helpers.contentAsString;
 
 /**
- * Unit testing does not require Play application start up.
- *
- * https://www.playframework.com/documentation/latest/JavaTest
+ * @author Marlon Kewaldar
+ * Test responsible for validating a few basic functions of the framework
  */
 public class UnitTest {
 

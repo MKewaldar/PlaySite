@@ -1,5 +1,3 @@
-import controllers.HomeController;
-import controllers.SongController;
 import org.junit.Before;
 import org.junit.Test;
 import play.core.j.JavaContextComponents;
@@ -7,7 +5,6 @@ import play.mvc.Http;
 import play.test.WithApplication;
 import play.twirl.api.Content;
 
-import views.*;
 import java.util.Collections;
 import java.util.Map;
 
