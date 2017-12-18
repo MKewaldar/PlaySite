@@ -17,7 +17,7 @@ import static junit.framework.TestCase.assertTrue;
  */
 public class DatabaseTest {
 
-    Database db;
+    private Database db;
 
     //Arrange
     @Before
@@ -32,23 +32,27 @@ public class DatabaseTest {
                         "password", ""
                 )
         );
-        // Evolutions is a special dependency for the Java Play database that allows working with EBean
-        Evolutions.applyEvolutions(db);
     }
-
-
+    /**
+     * Test responsible for establishing a connection, and manipulating the database soon after
+     * @throws Exception SQLException exception thrown if the method isn't written correctly
+     */
     @Test
-    public void testDatabase() throws Exception {
-//        Connection connection = db.getConnection();
-//        connection.prepareStatement("insert into song values (10, 'testing')").execute();
-//
-//        assertTrue(
-//                connection.prepareStatement("select * from song where id = 10")
-//                        .executeQuery().next()
-//        );
-//    }
+    public void testDatabaseConnection() throws Exception {
+        Connection connection = db.getConnection();
+        //Prepare a simple SQL statement, then inputs it
+        connection.prepareStatement("insert into song values (10, 'testing')").execute();
+
+        //Check if the previous added entry is added
+        assertTrue(
+                connection.prepareStatement("select * from song where id = 10")
+                        .executeQuery().next()
+        );
     }
 
+    /**
+     * Shuts the database down, then clean the Evolutions content
+     */
     @After
     public void shutdownAndClearDb() {
         Evolutions.cleanupEvolutions(db);

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package models;
 
@@ -19,7 +19,7 @@ public class Song extends Model implements Entity {
 
     //The @Id indicated that eBean treats the id field as the primary key
     @Id
-	private Integer id;
+    private Integer id;
 
     @Constraints.Required
     @Constraints.MinLength(5)
@@ -43,9 +43,10 @@ public class Song extends Model implements Entity {
 
     public static Finder<Integer, Song> find = new Finder<>(Song.class);
 
-    public Song () {
+    public Song() {
 
     }
+
     public Integer getId() {
         return id;
     }

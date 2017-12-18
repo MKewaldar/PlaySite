@@ -1,6 +1,5 @@
 import org.junit.Test;
 import play.Application;
-import play.Application;
 import play.test.Helpers;
 import play.test.TestBrowser;
 import play.test.WithBrowser;
@@ -17,10 +16,20 @@ import static play.test.Helpers.*;
 public class BrowserTest extends WithBrowser {
 
 
+    /**
+     * Start a mock-application with a H2 Database
+     * @return Application object that serves the code
+     */
     public Application provideApplication() {
         return fakeApplication(inMemoryDatabase());
     }
 
+    /**
+     * Stars a mock browser (Chrome, Firefox, Safari?) that browses the application
+     *
+     * @param port port on which the browser connects
+     * @return TestBrowser browser to connect to the application
+     */
     public TestBrowser provideBrowser(int port) {
         return Helpers.testBrowser(port);
     }
@@ -45,4 +54,15 @@ public class BrowserTest extends WithBrowser {
         browser.goTo("/");
         assertNotNull(browser.pageSource());
     }
+
+    /**
+     * Check if the application throws an error message if user goes to a random page
+     */
+    @Test
+    public void indexThrowsErrorIfUrlIsInvalid() {
+        browser.goTo("http://localhost:" + play.api.test.Helpers.testServerPort() + "/songs");
+        browser.goTo("/je3i12jrij09sdu09");
+        assertTrue(browser.pageSource().contains("Action Not Found"));
+    }
+
 }

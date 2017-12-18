@@ -33,7 +33,11 @@ public class SongController extends Controller {
      * @return Index Page View
      */
     public Result index() {
-        //This used to be a List. I changed this to a HashSet so the performance of the retrieval is improved.
+        //This used to be a List. I changed this to a HashSet because:
+        // Big O Attributes for HashSet:
+        // Adding elements: O(1)
+        // using contains() function: O(1)
+        // Checking next elements:  O(capacity/n)
         HashSet<Song> songList = new HashSet<>(Song.find.all());
         return ok(index.render(songList));
     }
@@ -77,7 +81,7 @@ public class SongController extends Controller {
 
     public Result edit(Integer songId) {
         Song song = Song.find.byId(songId);
-        if (handleError(song)) return notFound(_404.render());
+       // if (handleError(song)) return notFound(_404.render());
         Form<Song> songForm = formFactory.form(Song.class).fill(song);
         return ok(edit.render(songForm));
     }
@@ -113,20 +117,12 @@ public class SongController extends Controller {
      */
     public Result show(Integer songId) {
         Song song = Song.find.byId(songId);
-        if (handleError(song)) return notFound(_404.render());
-        return ok(show.render(song));
-    }
-
-    private boolean handleError(Song song) {
         if (song == null) {
-            try {
-                throw new SongNotFoundException();
-            } catch (SongNotFoundException e) {
-                e.printStackTrace();
-            }
-            return true;
+            flash("danger", "This song doesn't exist!");
+            return notFound(_404.render());
+
         }
-        return false;
+        return ok(show.render(song));
     }
 
     /**

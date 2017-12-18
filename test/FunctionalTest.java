@@ -1,7 +1,10 @@
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import play.core.j.JavaContextComponents;
 import play.mvc.Http;
+import play.test.Helpers;
 import play.test.WithApplication;
 import play.twirl.api.Content;
 
@@ -13,8 +16,6 @@ import static org.mockito.Mockito.mock;
 
 /**
  * A functional test starts a Play application for every test.
- *
- * https://www.playframework.com/documentation/latest/JavaFunctionalTest
  */
 public class FunctionalTest extends WithApplication {
 
@@ -23,7 +24,7 @@ public class FunctionalTest extends WithApplication {
      */
     //Assemble
     @Before
-    public void setUp(){
+    public void setUp() {
         //Parameters that need to be specifically defined, but whose content is unimportant in the context of this test
         Map<String, String> flashData = Collections.emptyMap();
         Map<String, Object> argData = Collections.emptyMap();
@@ -40,7 +41,7 @@ public class FunctionalTest extends WithApplication {
 
     /**
      * Renders the index view for testing
-     * @return View to be tested
+     * @return Content view to be tested
      */
     private Content renderView() {
         return views.html.index.render();
@@ -54,7 +55,7 @@ public class FunctionalTest extends WithApplication {
 
     @Test
     public void assertViewIsHtmlAndViewContainsMessage() {
-         assertThat("text/html").isEqualTo(renderView().contentType());
-         assertThat(renderView().body()).contains("Welcome to the Song Manager!");
+        assertThat("text/html").isEqualTo(renderView().contentType());
+        assertThat(renderView().body()).contains("Welcome to the Song Manager!");
     }
 }
