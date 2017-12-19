@@ -15,7 +15,6 @@ import static play.test.Helpers.contentAsString;
  * @author Marlon Kewaldar
  * Test responsible for validating a few basic functions of the framework
  */
-@SuppressWarnings("EmptyMethod")
 public class UnitTest {
 
     @Test

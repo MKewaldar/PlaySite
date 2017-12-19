@@ -44,15 +44,39 @@ public class FunctionalTest extends WithApplication {
         return views.html.index.render();
     }
 
+    /**
+     * Asserts that the view's body is not null
+     */
     @Test
-    public void assertViewIsNotNull() {
+    public void assertViewBodyIsNotNull() {
         assertThat("text/html").isEqualTo(renderView().contentType());
-        assertThat(renderView().body()).contains("Welcome to the Song Manager!");
+        assertThat(renderView().body()).isNotNull();
     }
 
+    /**
+     * Assert that the view's body is not empty
+     */
+    @Test
+    public void assertViewBodyIsNotEmpty() {
+        assertThat("text/html").isEqualTo(renderView().contentType());
+        assertThat(renderView().body()).isNotEmpty();
+    }
+
+    /**
+     * Assert that the view's body contains the welcome message
+     */
     @Test
     public void assertViewIsHtmlAndViewContainsMessage() {
         assertThat("text/html").isEqualTo(renderView().contentType());
         assertThat(renderView().body()).contains("Welcome to the Song Manager!");
+    }
+
+    /**
+     * Assert that the view's body does not return false information
+     */
+    @Test
+    public void assertViewDoesNotReturnFalseInformation() {
+        assertThat("css").isNotSameAs(renderView().contentType());
+        assertThat(renderView().body()).isNotSameAs("This isn't on the page source.");
     }
 }
