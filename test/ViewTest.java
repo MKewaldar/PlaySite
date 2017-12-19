@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
 /**
  * A functional test starts a Play application for every test.
  */
-public class FunctionalTest extends WithApplication {
+public class ViewTest extends WithApplication {
 
     /**
      * Mocks a HttpContext

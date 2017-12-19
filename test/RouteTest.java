@@ -41,7 +41,7 @@ public class RouteTest {
                 .uri("/rarqafafafgwerqwcqaf25/12481481489");
 
         Result result = route(fakeAppWithMemoryDb, request);
-        //BAD_REQUEST = error 400
+        //NOT_FOUND = error 404
         assertEquals(NOT_FOUND, result.status());
     }
 }
