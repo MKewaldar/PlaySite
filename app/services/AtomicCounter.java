@@ -13,6 +13,7 @@ import javax.inject.*;
  * annotation we would get a new instance every time a {@link Counter} is
  * injected.
  */
+@SuppressWarnings("ALL")
 @Singleton
 public class AtomicCounter implements Counter {
 

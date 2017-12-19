@@ -15,6 +15,7 @@ import static play.test.Helpers.contentAsString;
  * @author Marlon Kewaldar
  * Test responsible for validating a few basic functions of the framework
  */
+@SuppressWarnings("EmptyMethod")
 public class UnitTest {
 
     @Test
@@ -41,9 +42,7 @@ public class UnitTest {
             final CompletionStage<Result> future = controller.message();
 
             // Block until the result is completed
-            await().until(() -> assertThat(future.toCompletableFuture()).isCompletedWithValueMatching(result -> {
-                return contentAsString(result).equals("Hi!");
-            }));
+            await().until(() -> assertThat(future.toCompletableFuture()).isCompletedWithValueMatching(result -> contentAsString(result).equals("Hi!")));
         } finally {
             actorSystem.terminate();
         }

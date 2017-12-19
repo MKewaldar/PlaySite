@@ -5,10 +5,6 @@ import play.mvc.Result;
 import play.test.Helpers;
 
 import static junit.framework.TestCase.assertEquals;
-import static play.mvc.Http.Status.NOT_FOUND;
-import static play.test.Helpers.GET;
-import static play.test.Helpers.fakeApplication;
-import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.*;
 /**
  * Tests responsible for evaluation the workings of the route system
@@ -18,7 +14,7 @@ import static play.test.Helpers.*;
 
 public class RouteTest {
 
-    private Application fakeAppWithMemoryDb = fakeApplication(inMemoryDatabase("test"));
+    private final Application fakeAppWithMemoryDb = fakeApplication(inMemoryDatabase("test"));
 
     /**
      * Tests the routing to the home page, which should return code 200 (OK)

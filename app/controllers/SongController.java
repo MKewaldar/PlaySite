@@ -2,7 +2,6 @@ package controllers;
 
 import java.util.HashSet;
 
-import exceptions.SongNotFoundException;
 import models.Song;
 import play.data.Form;
 import play.data.FormFactory;
@@ -24,7 +23,7 @@ public class SongController extends Controller {
      * Inject a formFactory from the Play library
      */
     @Inject
-    FormFactory formFactory;
+    private FormFactory formFactory;
 
 
     /**
@@ -82,6 +81,7 @@ public class SongController extends Controller {
     public Result edit(Integer songId) {
         Song song = Song.find.byId(songId);
        // if (handleError(song)) return notFound(_404.render());
+        assert song != null;
         Form<Song> songForm = formFactory.form(Song.class).fill(song);
         return ok(edit.render(songForm));
     }
@@ -94,19 +94,17 @@ public class SongController extends Controller {
      */
     public Result delete(Integer songId) {
         Song song = Song.find.byId(songId);
-        //The if is generally not supposed to be triggered, but I added it just in case the HTTP request goes wrong
-        if (song == null) {
+        assert song != null;
+        //The catch is generally not supposed to be triggered, but I added it just in case the HTTP request goes wrong
             try {
                 song.delete();
+                flash("success", "The song was successfully deleted!");
+                return ok();
             } catch (NullPointerException e) {
                 e.printStackTrace();
+                flash("danger", "This song doesn't exist!");
+                return notFound("[Delete] This song doesn't exist!");
             }
-            flash("danger", "This song doesn't exist!");
-            return notFound("[Delete] This song doesn't exist!");
-        }
-        song.delete();
-        flash("success", "The song was successfully deleted!");
-        return ok();
     }
 
     /**
@@ -140,8 +138,8 @@ public class SongController extends Controller {
 
         Song song = songForm.get();
         Song oldSong = Song.find.byId(song.getId());
-        if (oldSong == null) {
-            try {
+        assert oldSong != null;
+        try {
                 oldSong.setTitle(song.getTitle());
             } catch (NullPointerException j) {
                 j.printStackTrace();
@@ -149,7 +147,6 @@ public class SongController extends Controller {
                 flash("danger", "This song doesn't exist!");
                 return notFound("[UPDATE] This song doesn't exist!");
             }
-        }
         //Don't change ID, because it's autoincremented in db
         oldSong.setArtist(song.getArtist());
         oldSong.setPriceInDollars(song.getPriceInDollars());

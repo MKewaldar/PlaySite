@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import play.db.Database;
 import play.db.Databases;
-import play.db.evolutions.Evolution;
 import play.db.evolutions.Evolutions;
 
 import java.sql.Connection;

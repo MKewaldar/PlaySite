@@ -4,7 +4,7 @@ import java.time.Clock;
 import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 import javax.inject.*;
-import play.Logger;
+
 import play.inject.ApplicationLifecycle;
 
 /**
@@ -21,6 +21,7 @@ import play.inject.ApplicationLifecycle;
  * This class needs to run code when the server stops. It uses the
  * application's {@link ApplicationLifecycle} to register a stop hook.
  */
+@SuppressWarnings("JavadocReference")
 @Singleton
 public class ApplicationTimer {
 

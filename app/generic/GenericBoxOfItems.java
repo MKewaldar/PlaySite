@@ -9,7 +9,7 @@ import models.Song;
  * after final code review.
  * @param <T> Generic type that the box can hold.
  */
-public class GenericBoxOfItems<T> {
+class GenericBoxOfItems<T> {
 
     private T itemAdded;
 
@@ -17,7 +17,7 @@ public class GenericBoxOfItems<T> {
      * Add an item to the box
      * @param t generic type
      */
-    public void addItemToBox(T t) {
+    void addItemToBox(T t) {
         this.itemAdded = t;
     }
 
@@ -25,7 +25,7 @@ public class GenericBoxOfItems<T> {
      * Get the item in the box
      * @return generic item in the box
      */
-    public T getItemAdded() {
+    T getItemAdded() {
         return itemAdded;
     }
 
@@ -34,8 +34,8 @@ public class GenericBoxOfItems<T> {
      * @param args arguments for main method
      */
     public static void main(String[] args) {
-        GenericBoxOfItems<Song> boxWithSongs = new GenericBoxOfItems<Song>();
-        GenericBoxOfItems<String> boxWithWords = new GenericBoxOfItems<String>();
+        GenericBoxOfItems<Song> boxWithSongs = new GenericBoxOfItems<>();
+        GenericBoxOfItems<String> boxWithWords = new GenericBoxOfItems<>();
 
 
         Song testSong1 = new Song();
@@ -48,6 +48,6 @@ public class GenericBoxOfItems<T> {
         boxWithWords.addItemToBox(testString2);
 
         System.out.println(boxWithSongs.getItemAdded().toString());
-        System.out.println(boxWithWords.getItemAdded().toString());
+        System.out.println(boxWithWords.getItemAdded());
     }
 }

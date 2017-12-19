@@ -1,10 +1,7 @@
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import play.core.j.JavaContextComponents;
 import play.mvc.Http;
-import play.test.Helpers;
 import play.test.WithApplication;
 import play.twirl.api.Content;
 

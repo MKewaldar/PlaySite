@@ -8,6 +8,7 @@ package services;
  * The {@link Modules} class binds this interface to the
  * {@link AtomicCounter} implementation.
  */
+@SuppressWarnings("JavadocReference")
 public interface Counter {
     int nextCount();
 }

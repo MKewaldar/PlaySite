@@ -1,6 +1,3 @@
-/**
- *
- */
 package models;
 
 import io.ebean.*;
@@ -41,7 +38,7 @@ public class Song extends Model implements Entity {
     @Constraints.Required
     private Integer durationInMinutes;
 
-    public static Finder<Integer, Song> find = new Finder<>(Song.class);
+    public static final Finder<Integer, Song> find = new Finder<>(Song.class);
 
     public Song() {
 
